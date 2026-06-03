@@ -1,0 +1,26 @@
+﻿<Page x:Class="GymBelepteto.ViewModels.CustomerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="CustomerPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Vendégek Nyilvántartása" FontSize="22" Foreground="Black" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="VENDÉG BELÉPTETÉSE (1 ALKALOM)" HorizontalAlignment="Right" Padding="20,10" FontWeight="Bold" Click="BeleptetesButton_Click"/>
+        </Grid>
+
+        <DataGrid x:Name="CustomersDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="35">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vezetéknév" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Keresztnév" Binding="{Binding FirstName}" Width="*"/>
+                <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" Width="130"/>
+                <DataGridTextColumn Header="Hátralévő alkalmak" Binding="{Binding RemainingOccasions}" Width="150"/>
+                <DataGridTextColumn Header="Hűségpontok" Binding="{Binding LoyaltyPoints}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
