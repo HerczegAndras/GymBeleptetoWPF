@@ -20,5 +20,6 @@ namespace GymBelepteto.Data
         {
             Connection?.Close();
         }
+
     }
 }

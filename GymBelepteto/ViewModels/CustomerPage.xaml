@@ -22,5 +22,37 @@
                 <DataGridTextColumn Header="Hűségpontok" Binding="{Binding LoyaltyPoints}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Vendégek Nyilvántartása" FontSize="22" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+
+                <TextBlock Text="Bérlet típus:" Foreground="White" VerticalAlignment="Center" Margin="10,0,5,0"/>
+                <ComboBox Name="TicketTypeComboBox" Width="180" Height="35" VerticalContentAlignment="Center" Margin="0,0,15,0"
+              DisplayMemberPath="Name" Background="#1A1A1E" Foreground="Black"/>
+
+                <Button Content="BÉRLET VÁSÁRLÁSA" Margin="0,0,10,0" Padding="15,10" Background="#00ADB5" Foreground="White" FontWeight="Bold" Click="VasarlasButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="VENDÉG BELÉPTETÉSE (1 ALKALOM)" Padding="15,10" Background="#CCFF00" Foreground="#121214" FontWeight="Bold" Click="BeleptetesButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
+    
 </Page>
