@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GymBelepteto.Data;
+﻿using GymBelepteto.Data;
+using SQLite;
 
 namespace GymBelepteto.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     {
         private readonly AppDbContext _context;
 
@@ -14,32 +14,35 @@ namespace GymBelepteto.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            return await Task.Run(() =>
+                _context.Connection.Table<T>().ToList());
         }
 
         public async Task<T?> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await Task.Run(() =>
+                _context.Connection.Find<T>(id));
         }
 
         public async Task AddAsync(T entity)
         {
-            await _context.Set<T>().AddAsync(entity);
+            await Task.Run(() =>
+                _context.Connection.Insert(entity));
         }
 
         public void Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+            _context.Connection.Update(entity);
         }
 
         public void Delete(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _context.Connection.Delete(entity);
         }
 
         public async Task SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }

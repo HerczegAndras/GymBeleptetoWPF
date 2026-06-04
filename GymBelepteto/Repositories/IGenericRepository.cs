@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
     namespace GymBelepteto.Repositories
     {
-        public interface IGenericRepository<T> where T : class
+   
+        public interface IGenericRepository<T>
+            where T : class, new()
         {
             Task<IEnumerable<T>> GetAllAsync();
             Task<T?> GetByIdAsync(int id);
@@ -18,4 +20,5 @@ using System.Threading.Tasks;
             Task SaveAsync();
         }
     }
+
 

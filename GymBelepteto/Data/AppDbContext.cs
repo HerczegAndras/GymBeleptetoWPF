@@ -3,7 +3,7 @@ using GymBelepteto.Models;
 
 namespace GymBelepteto.Data
 {
-    public class AppDbContext
+    public class AppDbContext : IDisposable
     {
         public SQLiteConnection Connection { get; }
 
@@ -14,6 +14,11 @@ namespace GymBelepteto.Data
             Connection.CreateTable<Customer>();
             Connection.CreateTable<User>();
             Connection.CreateTable<Product>();
+        }
+
+        public void Dispose()
+        {
+            Connection?.Close();
         }
     }
 }
