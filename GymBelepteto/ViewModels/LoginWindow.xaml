@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GymBelepteto.ViewModels"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Gym Manager ERP - Bejelentkezés" 
+        Height="450" Width="400" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize"
+        Background="#121214">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Width="300">
+            <TextBlock Text="GYM SYSTEM" Foreground="#CCFF00" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+            <TextBlock Text="Kérlek, jelentkezz be a folytatáshoz" Foreground="#888888" FontSize="12" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+            <TextBlock Text="Felhasználónév" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBox x:Name="TxtUsername" Height="35" Background="#1A1A1E" Foreground="White" BorderBrush="#333333" Padding="10,0" VerticalContentAlignment="Center" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Jelszó" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <PasswordBox x:Name="TxtPassword" Height="35" Background="#1A1A1E" Foreground="White" BorderBrush="#333333" Padding="10,0" VerticalContentAlignment="Center" Margin="0,0,0,25"/>
+
+            <Button x:Name="BtnLogin" Content="BEJELENTKEZÉS" Height="40" Background="#CCFF00" Foreground="#121214" FontWeight="Bold" BorderThickness="0" Cursor="Hand" Click="BtnLogin_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="BtnExit" Content="Bezárás" Background="Transparent" Foreground="#888888" BorderThickness="0" Margin="0,15,0,0" Cursor="Hand" Click="BtnExit_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

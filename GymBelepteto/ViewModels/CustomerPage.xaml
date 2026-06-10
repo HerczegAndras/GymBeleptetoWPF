@@ -1,50 +1,153 @@
 ﻿<Page x:Class="GymBelepteto.ViewModels.CustomerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="CustomerPage">
-    <Grid>
+      Title="CustomerPage"
+      Background="#121214">
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="Vendégek Nyilvántartása" FontSize="22" Foreground="Black" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Content="VENDÉG BELÉPTETÉSE (1 ALKALOM)" HorizontalAlignment="Right" Padding="20,10" FontWeight="Bold" Click="BeleptetesButton_Click"/>
-        </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <DataGrid x:Name="CustomersDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="35">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Vezetéknév" Binding="{Binding LastName}" Width="*"/>
-                <DataGridTextColumn Header="Keresztnév" Binding="{Binding FirstName}" Width="*"/>
-                <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" Width="130"/>
-                <DataGridTextColumn Header="Hátralévő alkalmak" Binding="{Binding RemainingOccasions}" Width="150"/>
-                <DataGridTextColumn Header="Hűségpontok" Binding="{Binding LoyaltyPoints}" Width="100"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="0" Margin="0,0,0,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Vendégek Nyilvántartása" FontSize="22" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Text="Vendégek Nyilvántartása" FontSize="22" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
 
-            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Bérlet típus:" Foreground="White" VerticalAlignment="Center" Margin="10,0,5,0"/>
 
-                <TextBlock Text="Bérlet típus:" Foreground="White" VerticalAlignment="Center" Margin="10,0,5,0"/>
-                <ComboBox Name="TicketTypeComboBox" Width="180" Height="35" VerticalContentAlignment="Center" Margin="0,0,15,0"
-              DisplayMemberPath="Name" Background="#1A1A1E" Foreground="Black"/>
+                    <ComboBox Name="TicketTypeComboBox" Width="150" Height="35" VerticalContentAlignment="Center" Margin="0,0,10,0"
+                              DisplayMemberPath="Name" Background="#1A1A1E" Foreground="Black"/>
 
-                <Button Content="BÉRLET VÁSÁRLÁSA" Margin="0,0,10,0" Padding="15,10" Background="#00ADB5" Foreground="White" FontWeight="Bold" Click="VasarlasButton_Click">
-                    <Button.Resources>
+                    <Button Content="BÉRLET VÁSÁRLÁSA" Margin="0,0,10,0" Padding="12,0" Height="35" Background="#00ADB5" Foreground="White" FontWeight="Bold" Click="VasarlasButton_Click" BorderThickness="0" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Content="BELÉPTETÉS (1 ALK.)" Padding="12,0" Height="35" Background="#CCFF00" Foreground="#121214" FontWeight="Bold" Click="BeleptetesButton_Click" BorderThickness="0" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <TextBox x:Name="TxtCustomerSearch" Height="40" Background="#222226" Foreground="White" 
+                         BorderBrush="#00ADB5" BorderThickness="1.5" FontSize="14"
+                         Padding="12,0" VerticalContentAlignment="Center" TextChanged="TxtCustomerSearch_TextChanged">
+                    <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="4"/>
                         </Style>
-                    </Button.Resources>
-                </Button>
+                    </TextBox.Resources>
+                </TextBox>
 
-                <Button Content="VENDÉG BELÉPTETÉSE (1 ALKALOM)" Padding="15,10" Background="#CCFF00" Foreground="#121214" FontWeight="Bold" Click="BeleptetesButton_Click">
+                <TextBlock Text="Keresés név vagy telefon alapján..." Foreground="#888888" IsHitTestVisible="False" 
+                           VerticalAlignment="Center" Margin="14,0,0,0" FontSize="14">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Text, ElementName=TxtCustomerSearch}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+
+            <DataGrid x:Name="CustomersDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="38"
+                      Background="#1A1A1E" RowBackground="#1A1A1E" AlternatingRowBackground="#222226" 
+                      Foreground="White" BorderThickness="0" GridLinesVisibility="None" SelectionMode="Single">
+
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#CCFF00"/>
+                                <Setter Property="Foreground" Value="#121214"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#25252A"/>
+                        <Setter Property="Foreground" Value="#CCFF00"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Padding" Value="12,8"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <ContentPresenter Margin="12,0" VerticalAlignment="Center"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Vezetéknév" Binding="{Binding LastName}" Width="*"/>
+                    <DataGridTextColumn Header="Keresztnév" Binding="{Binding FirstName}" Width="*"/>
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" Width="140"/>
+                    <DataGridTextColumn Header="Hátralévő alkalmak" Binding="{Binding RemainingOccasions}" Width="150"/>
+                    <DataGridTextColumn Header="Hűségpontok" Binding="{Binding LoyaltyPoints}" Width="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Border Grid.Row="1" Background="#1A1A1E" CornerRadius="6" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Új Vendég Regisztráció" Foreground="#CCFF00" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                <UniformGrid Columns="4" Rows="1">
+                    <StackPanel Margin="0,0,15,0">
+                        <TextBlock Text="Vezetéknév" Foreground="White" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtLastName" Height="35" Background="#121214" Foreground="White" BorderBrush="#333333" Padding="8,0" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,15,0">
+                        <TextBlock Text="Keresztnév" Foreground="White" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtFirstName" Height="35" Background="#121214" Foreground="White" BorderBrush="#333333" Padding="8,0" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,15,0">
+                        <TextBlock Text="Telefonszám" Foreground="White" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtPhone" Height="35" Background="#121214" Foreground="White" BorderBrush="#333333" Padding="8,0" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Text="Kezdő alkalmak" Foreground="White" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtInitialOccasions" Height="35" Background="#121214" Foreground="White" BorderBrush="#333333" Padding="8,0" VerticalContentAlignment="Center" Text="0"/>
+                    </StackPanel>
+                </UniformGrid>
+
+                <Button Content="VENDÉG MENTÉSE" Height="38" Background="#CCFF00" Foreground="#121214" FontWeight="Bold" BorderThickness="0" Cursor="Hand" Click="AddCustomerButton_Click" Margin="0,15,0,0" Width="200" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="4"/>
@@ -52,7 +155,6 @@
                     </Button.Resources>
                 </Button>
             </StackPanel>
-        </Grid>
+        </Border>
     </Grid>
-    
 </Page>

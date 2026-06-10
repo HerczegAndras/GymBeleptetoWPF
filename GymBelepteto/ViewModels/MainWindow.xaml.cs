@@ -1,8 +1,6 @@
 ﻿using GymBelepteto.Data;
 using GymBelepteto.Models;
 using GymBelepteto.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Windows;
 
 namespace GymBelepteto
@@ -16,7 +14,13 @@ namespace GymBelepteto
             // Tesztadatok generálása az új sqlite-net-pcl szerint
             InitializeDatabaseData();
 
+            // Alapértelmezett kezdőoldal
             MainFrame.Navigate(new CustomerPage());
+        }
+
+        private void NavProducts_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ProductPage());
         }
 
         private void NavCustomers_Click(object sender, RoutedEventArgs e)
@@ -24,16 +28,16 @@ namespace GymBelepteto
             MainFrame.Navigate(new CustomerPage());
         }
 
-
-
         private void InitializeDatabaseData()
         {
             using var context = new AppDbContext();
 
             // TABLE CREATE
+            // TABLES CREATE
             context.Connection.CreateTable<Customer>();
+            context.Connection.CreateTable<Product>();
 
-            // lekérdezés
+            // Lekérdezés
             var customers = context.Connection.Table<Customer>().ToList();
 
             if (customers.Count == 0)
@@ -57,8 +61,5 @@ namespace GymBelepteto
                 });
             }
         }
-        
-        }
     }
-    
-    
+}
